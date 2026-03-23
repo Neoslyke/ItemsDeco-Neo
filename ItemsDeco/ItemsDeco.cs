@@ -13,7 +13,7 @@ public class ItemsDeco : TerrariaPlugin
 {
     public override string Name => "ItemsDeco";
     public override string Author => "Neoslyke, FrankV22, Soofa, 少司命";
-    public override Version Version => new Version(3, 2, 0);
+    public override Version Version => new Version(2, 1, 0);
     public override string Description => "Shows item decoration when switching items and in chat.";
 
     private readonly Dictionary<int, int> _lastSelectedItem = new();
