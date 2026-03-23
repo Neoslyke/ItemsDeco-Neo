@@ -19,7 +19,7 @@ The **ItemsDeco** is an extension for **TShock** that displays a decoration in t
 - **Show Item Spryte Above Head Player** Displays the spryte of the item the player has selected above his head, as if it were the WeaponsOut mod
 - **Show item name**: Whenever a player changes the item they are holding, the name of that item will appear as a floating message above their head and in the chat. It also shows damage, and this can be toggled in the config.
 - **Color customization**: The floating messages will be displayed in a predefined color (currently set to white, i.e., 255,255,255).
-- **External configuration support**: The plugin now allows loading the configuration from an external JSON file called `ItemDecoConfig.json` inside the `tshock/ItemDeco/` folder to customize the colors and display.
+- **External configuration support**: The plugin now allows loading the configuration from an external JSON file called `ItemsDecoConfig.json` inside the `tshock/ItemsDeco/` folder to customize the colors and display.
 
 ## Installation
 
@@ -27,14 +27,14 @@ The **ItemsDeco** is an extension for **TShock** that displays a decoration in t
 2. **Place in the plugins folder**: Copy the DLL file into the `plugins` folder of your TShock installation.
 3. **Restart the server**: Restart the server to load the plugin.
 
-> `ItemDecoration.dll`
+> `ItemsDeco.dll`
 > `LazyAPI.dll`
 
 ## Usage
 
 - Generally, I make PlugAndPlay codes, so you can use it without touching anything.
 - Once installed and activated, no additional commands are required. The plugin will start working automatically, displaying the item name when you switch objects.
-- The configuration file `ItemDecoConfig.json` is located in the `tshock/ItemDeco/` folder and allows customizing the floating message colors and other parameters. If the file does not exist, it will be generated with a default configuration.
+- The configuration file `ItemsDecoConfig.json` is located in the `tshock/ItemsDeco/` folder and allows customizing the floating message colors and other parameters. If the file does not exist, it will be generated with a default configuration.
 
 ## Permissions
 
@@ -65,5 +65,5 @@ If you encounter any issues or have questions, feel free to open an issue on the
 
 ---
 
-Enjoy using **ItemDeco** and enhance your Terraria experience!
+Enjoy using **ItemsDeco** and enhance your Terraria experience!
 
