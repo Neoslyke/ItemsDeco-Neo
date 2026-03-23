@@ -20,16 +20,19 @@ public class ItemsDeco : TerrariaPlugin
 
     public static Configuration Config { get; private set; } = new();
 
-    public ItemsDeco(Main game) : base(game) { }
+    public ItemsDeco(Main game) : base(game)
+    {
+        Order = -100;
+    }
 
     public override void Initialize()
     {
         Config = Configuration.Load();
 
         ServerApi.Hooks.ServerLeave.Register(this, OnLeave);
-        PlayerHooks.PlayerChat += OnPlayerChat;
+        ServerApi.Hooks.ServerChat.Register(this, OnServerChat, int.MinValue);
         On.OTAPI.Hooks.MessageBuffer.InvokeGetData += OnGetData;
-        TShockAPI.Hooks.GeneralHooks.ReloadEvent += OnReload;
+        GeneralHooks.ReloadEvent += OnReload;
     }
 
     protected override void Dispose(bool disposing)
@@ -37,9 +40,9 @@ public class ItemsDeco : TerrariaPlugin
         if (disposing)
         {
             ServerApi.Hooks.ServerLeave.Deregister(this, OnLeave);
-            PlayerHooks.PlayerChat -= OnPlayerChat;
+            ServerApi.Hooks.ServerChat.Deregister(this, OnServerChat);
             On.OTAPI.Hooks.MessageBuffer.InvokeGetData -= OnGetData;
-            TShockAPI.Hooks.GeneralHooks.ReloadEvent -= OnReload;
+            GeneralHooks.ReloadEvent -= OnReload;
         }
         base.Dispose(disposing);
     }
@@ -55,14 +58,15 @@ public class ItemsDeco : TerrariaPlugin
         _lastSelectedItem.Remove(args.Who);
     }
 
-    private void OnPlayerChat(PlayerChatEventArgs args)
+    private void OnServerChat(ServerChatEventArgs args)
     {
         if (args.Handled) return;
 
-        var player = args.Player;
+        var player = TShock.Players[args.Who];
         if (player == null) return;
 
-        var text = args.RawText;
+        var text = args.Text;
+
         if (string.IsNullOrWhiteSpace(text)) return;
         if (text.StartsWith(TShock.Config.Settings.CommandSpecifier)) return;
         if (text.StartsWith(TShock.Config.Settings.CommandSilentSpecifier)) return;
@@ -184,10 +188,13 @@ public class ItemsDeco : TerrariaPlugin
 
     private string FormatChatMessage(TSPlayer player, string message)
     {
-        if (!Config.ItemChat.Enabled) return message;
+        if (!Config.ItemChat.Enabled)
+            return message;
 
         var item = player.TPlayer.inventory[player.TPlayer.selectedItem];
-        if (item == null || item.type <= 0) return message;
+
+        if (item == null || item.type <= 0)
+            return message;
 
         var parts = new List<string>();
 
@@ -202,7 +209,8 @@ public class ItemsDeco : TerrariaPlugin
             parts.Add($"[c/{hex}:{item.damage}]");
         }
 
-        if (parts.Count == 0) return message;
+        if (parts.Count == 0)
+            return message;
 
         return $"[ {string.Join(" ", parts)} ] {message}";
     }
